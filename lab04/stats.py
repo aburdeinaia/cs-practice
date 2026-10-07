@@ -26,7 +26,6 @@ def parse_record(line: str) -> tuple[str, float, str]:
     } 
 def read_valid(lines: list[str]) -> tuple[list[tuple[str, float, str]], int]:
     valid_records = []
-    error_count = 0
 
     for line in lines:
         line = line.strip()
@@ -37,9 +36,9 @@ def read_valid(lines: list[str]) -> tuple[list[tuple[str, float, str]], int]:
             record = parse_record(line)
             valid_records.append(record)
         except ValueError:
-            error_count += 1
+            continue
 
-    return valid_records, error_count
+    return valid_records
 def average_by_city(records: list[tuple[str, float, str]]) -> dict[str, float]:
     total = {}
     count = {}
