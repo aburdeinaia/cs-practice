@@ -19,7 +19,11 @@ def parse_record(line: str) -> tuple[str, float, str]:
     except ValueError:
         raise ValueError(f"Температура не является числом: '{temp_str}'")
 
-    return city.strip(), temp, date.strip()
+   return {
+        "city": city.strip(),
+        "temp": temp,
+        "date": date.strip()
+    } 
 def read_valid(lines: list[str]) -> tuple[list[tuple[str, float, str]], int]:
     valid_records = []
     error_count = 0
