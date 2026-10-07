@@ -47,3 +47,16 @@ def average_by_city(records: list[tuple[str, float, str]]) -> dict[str, float]:
     averages = {city: total[city] / count[city] for city in total}
     return averages
 
+def warmest_city(averages: dict[str, float]) -> str | None:
+    if not averages:
+        return None
+
+    best_city = None
+    best_avg = None
+
+    for city, avg in averages.items():
+        if best_avg is None or avg > best_avg:
+            best_avg = avg
+            best_city = city
+
+    return best_city
