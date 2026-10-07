@@ -58,16 +58,10 @@ def average_by_city(records:list[dict]) -> dict:
 
     return averages 
 
-def warmest_city(averages: dict[str, float]) -> str | None:
-    if not averages:
-        return None
+def warmest_city(averages: dict) -> str:
+    
+    max_avg = max(averages.values())
 
-    best_city = None
-    best_avg = None
+    candidates = [city for city, avg in averages.items() if avg == max_avg]
 
-    for city, avg in averages.items():
-        if best_avg is None or avg > best_avg:
-            best_avg = avg
-            best_city = city
-
-    return best_city
+    return min(candidates)
