@@ -36,5 +36,14 @@ def read_valid(lines: list[str]) -> tuple[list[tuple[str, float, str]], int]:
             error_count += 1
 
     return valid_records, error_count
+def average_by_city(records: list[tuple[str, float, str]]) -> dict[str, float]:
+    total = {}
+    count = {}
 
+    for city, temp, _ in records:
+        total[city] = total.get(city, 0.0) + temp
+        count[city] = count.get(city, 0) + 1
+
+    averages = {city: total[city] / count[city] for city in total}
+    return averages
 
