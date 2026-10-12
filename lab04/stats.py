@@ -23,3 +23,15 @@ def parse_record(line: str) -> dict:
         
     return {"city": city, "temperature": temperature, "date": date}
 
+def read_valid(lines: list[str]) -> list[dict]:
+
+    valid_records = []
+    for line in lines:
+        if not line.strip():
+            continue
+        try:
+            record = parse_record(line)
+            valid_records.append(record)
+        except ValueError:
+            pass
+    return valid_records
