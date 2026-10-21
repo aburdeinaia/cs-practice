@@ -13,3 +13,19 @@ def parse_event(line: str) -> dict:
         raise ValueError("Несуществующий уровень " + level)
 
     return {"time": time_s, "level": level, "message": message}
+
+def count_levels(lines) -> dict:
+    counts = { "BROKEN": 0, "DEBUG": 0, "ERROR": 0, "INFO": 0, "WARNING": 0  }
+    
+    for line in lines:
+        if not line.strip():
+            continue
+
+        try:
+            event = parse_event(line)
+            level = event["level"]
+            counts[level] += 1
+        except ValueError:
+            counts["BROKEN"] += 1
+
+    return counts
