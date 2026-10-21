@@ -14,8 +14,9 @@ def parse_event(line: str) -> dict:
 
     return {"time": time_s, "level": level, "message": message}
 
+
 def count_levels(lines) -> dict:
-    counts = { "BROKEN": 0, "DEBUG": 0, "ERROR": 0, "INFO": 0, "WARNING": 0  }
+    counts = {}
     
     for line in lines:
         if not line.strip():
@@ -24,11 +25,12 @@ def count_levels(lines) -> dict:
         try:
             event = parse_event(line)
             level = event["level"]
-            counts[level] += 1
+            counts[level] = counts.get(level, 0) + 1
         except ValueError:
-            counts["BROKEN"] += 1
+            counts["BROKEN"] = counts.get("BROKEN", 0) + 1
 
     return counts
+
 
 def top_errors(lines, n: int) -> list[list]:
     counts = {}
@@ -39,27 +41,30 @@ def top_errors(lines, n: int) -> list[list]:
 
         try:
             event = parse_event(line)
-            level = event["level"]
-            counts[level] = counts.get(level, 0) + 1
+            if event["level"] == "ERROR":
+                msg = event["message"]
+                counts[msg] = counts.get(msg, 0) + 1
         except ValueError:
             continue
+
     items = [[msg, count] for msg, count in counts.items()]
+
     def sort_key(pair):
         return (-pair[1], pair[0])
 
     items.sort(key=sort_key)
     return items[:n]
 
+
 def format_report(counts: dict, errors: list[list]) -> str:
     report_lines = ["Отчёт по журналу", ""]
-
-    # По алфавиту BROKEN встанет на первое место сам
     for level in sorted(counts.keys()):
-        report_lines.append(f"{level}: {counts[level]}")
+        report_lines.append(level + ": " + str(counts[level]))
 
     report_lines.append("")
     report_lines.append("Частые ошибки:")
 
     for msg, count in errors:
-        report_lines.append(f"- {msg} — {count}")
+        report_lines.append("- " + msg + " — " + str(count))
+
     return "\n".join(report_lines) + "\n"
