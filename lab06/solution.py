@@ -18,3 +18,17 @@ def deepest_path(paths: list[syr]) -> str:
             best_slashes = current_slashes
     return best_path
 
+def human_size(n_bytes: int) -> str:
+    # Если размер меньше 1024, выводим байты целым числом
+    if n_bytes < 1024:
+        bytes_text = str(n_bytes)
+        result_string = bytes_text + " Б"
+        return result_string
+    
+    # Для КБ, МБ, ГБ, ТБ делим на 1024 и округляем до 1 знака
+    for unit in ["КБ", "МБ", "ГБ", "ТБ"]:
+        n_bytes /= 1024
+        if n_bytes < 1024 or unit == "ТБ":
+            rounded_bytes = round(n_bytes, 1)
+            result_string = str(rounded_bytes) + " " + unit
+            return result_string
