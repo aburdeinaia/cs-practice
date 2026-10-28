@@ -9,8 +9,9 @@ def count_by_extension(paths: list[str]) -> dict[str, int]:
 def deepest_path(paths: list[str]) -> str:
     if not paths:
         return ""
-    best_path = path[0]
+    best_path = paths[0]
     best_slashes = best_path.count("/")
+    
     for path in paths:
         current_slashes = path.count("/")
         if  current_slashes > best_slashes or (current_slashes == best_slashes and path < best_path):
