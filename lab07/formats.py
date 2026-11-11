@@ -38,7 +38,33 @@ def to_type(value):
     except ValueError:
         pass
     return text
+def parse_settings(lines):
+    result = {}
+    current_list = None
 
+    for raw_line in lines:
+        parts = raw_line.split("#")
+        line = parts[0].strip()
+
+        if line == "":
+            continue
+
+        if line.startswith("-"):
+            item_text = line[1:].strip()
+            result[current_list].append(to_type(item_text))
+        elif ":" in line:
+            pair = line.split(":", 1)
+            key = pair[0].strip()
+            val = pair[1].strip()
+
+            if val == "":
+                result[key] = []
+                current_list = key
+            else:
+                result[key] = to_type(val)
+                current_list = None
+
+    return result
 def merge_by_key(rows, extra, key):
     result = []
     for row in rows:
