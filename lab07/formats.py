@@ -19,6 +19,7 @@ def csv_to_records(text):
             record[col_name] = col_val
         records.append(record)
     return records
+
 def to_type(value):
     text = value.strip()
     low = text.lower()
@@ -37,3 +38,21 @@ def to_type(value):
     except ValueError:
         pass
     return text
+
+def merge_by_key(rows, extra, key):
+    result = []
+    for row in rows:
+        new_row = {}
+        key_value = row.get(key)
+        if key_value in extra:
+            info = extra[key_value]
+            for k in info:
+                new_row[k] = info[k]
+        for k in row:
+            new_row[k] = row[k]
+        result.append(new_row)
+    return result
+
+
+def records_to_json(records):
+    return json.dumps(records, ensure_ascii=False, indent=2, sort_keys=True)
