@@ -19,3 +19,21 @@ def csv_to_records(text):
             record[col_name] = col_val
         records.append(record)
     return records
+def to_type(value):
+    text = value.strip()
+    low = text.lower()
+    if low == "true" or low == "yes":
+        return True
+    if low == "false" or low == "no":
+        return False
+
+    try:
+        return int(text)
+    except ValueError:
+        pass
+
+    try:
+        return float(text)
+    except ValueError:
+        pass
+    return text
