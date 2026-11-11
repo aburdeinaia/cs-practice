@@ -43,13 +43,13 @@ def parse_settings(lines):
     current_list = None
 
     for raw_line in lines:
-        parts = raw_line.split("#")
+        parts = raw_line.split("#", 1)
         line = parts[0].strip()
 
         if line == "":
             continue
 
-        if line.startswith("-"):
+        if line.startswith("-") and current_list is not None:
             item_text = line[1:].strip()
             result[current_list].append(to_type(item_text))
         elif ":" in line:
