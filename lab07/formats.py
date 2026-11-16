@@ -68,12 +68,12 @@ def parse_settings(lines: list[str]) -> dict:
             current_list = None
 
     return result
-def merge_by_key(rows, extra, key):
+def merge_by_key(rows: list[dict], extra: dict, key: str = "id") -> list[dict]:
     result = []
     for row in rows:
         new_row = {}
         key_value = row.get(key)
-        if key_value in extra:
+        if key_value is not None and key_value in extra:
             info = extra[key_value]
             for k in info:
                 new_row[k] = info[k]
