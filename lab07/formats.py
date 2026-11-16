@@ -1,6 +1,6 @@
 import json
 
-def csv_to_records(text):
+def csv_to_records(text:str) -> list[dict]:
     lines = text.splitlines()
     clean_lines = []
     for line in lines:
@@ -38,24 +38,25 @@ def to_type(value):
     except ValueError:
         pass
     return text
-def parse_settings(lines):
+def parse_settings(lines: list[str]) -> dict:
     result = {}
     current_list = None
 
     for raw_line in lines:
-        parts = raw_line.split("#", 1)
-        line = parts[0].strip()
+        #Убираем все после символа # и пробелы по краям
+        line = raw_line.split('#', 1)[0].strip()
 
         if line == "":
             continue
 
-        if line.startswith("-") and current_list is not None:
+        is_list_item = line.startwith("- ") or line == "-"
+        if current_list is not None and is_list_item:
             item_text = line[1:].strip()
             result[current_list].append(to_type(item_text))
         elif ":" in line:
-            pair = line.split(":", 1)
-            key = pair[0].strip()
-            val = pair[1].strip()
+            key, val = line.split(":", 1)
+            key = key.strip()
+            val = val.strip()
 
             if val == "":
                 result[key] = []
@@ -63,6 +64,8 @@ def parse_settings(lines):
             else:
                 result[key] = to_type(val)
                 current_list = None
+        else:
+            current_list = None
 
     return result
 def merge_by_key(rows, extra, key):
