@@ -15,7 +15,7 @@ def csv_to_records(text:str) -> list[dict]:
         record = {}
         for i in range(len(headers)):
             col_name = headers[i].strip()
-            col_val = values[i].strip()
+            col_val = values[i].strip() if i < len(values) else ""
             record[col_name] = col_val
         records.append(record)
     return records
@@ -28,7 +28,7 @@ def to_type(value):
     if low == "false" or low == "no":
         return False
 
-     if "_" not in text:
+    if "_" not in text:
         try:
             return int(text)
         except ValueError:
