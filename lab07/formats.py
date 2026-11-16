@@ -43,8 +43,8 @@ def parse_settings(lines: list[str]) -> dict:
     current_list = None
 
     for raw_line in lines:
-        #Убираем все после символа # и пробелы по краям
-        line = raw_line.split('#', 1)[0].strip()
+        #Убираем все после символа "#" и пробелы по краям
+        line = raw_line.split("#", 1)[0].strip()
 
         if line == "":
             continue
