@@ -28,16 +28,20 @@ def to_type(value):
     if low == "false" or low == "no":
         return False
 
-    try:
-        return int(text)
-    except ValueError:
-        pass
+     if "_" not in text:
+        try:
+            return int(text)
+        except ValueError:
+            pass
 
-    try:
-        return float(text)
-    except ValueError:
-        pass
+        if low not in ("nan", "inf", "+inf", "-inf", "infinity", "+infinity", "-infinity"):
+            try:
+                return float(text)
+            except ValueError:
+                pass
+
     return text
+
 def parse_settings(lines: list[str]) -> dict:
     result = {}
     current_list = None
