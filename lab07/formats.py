@@ -49,7 +49,7 @@ def parse_settings(lines: list[str]) -> dict:
         if line == "":
             continue
 
-        is_list_item = line.startwith("- ") or line == "-"
+        is_list_item = line.startswith("- ") or line == "-"
         if current_list is not None and is_list_item:
             item_text = line[1:].strip()
             result[current_list].append(to_type(item_text))
