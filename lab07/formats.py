@@ -21,7 +21,6 @@ def csv_to_records(text:str) -> list[dict]:
     return records
 
 def to_type(value):
-    text = value.strip().replace(",", ".")
     low = text.lower()
     if low == "true" or low == "yes":
         return True
@@ -34,9 +33,10 @@ def to_type(value):
         except ValueError:
             pass
 
-        if low not in ("nan", "inf", "+inf", "-inf", "infinity", "+infinity", "-infinity"):
+        float_text = text.replace(",",".") if text.count(",") ==1 else text
+        if float_text.lower() not in ("nan", "inf", "+inf", "-inf", "infinity", "+infinity", "-infinity"):
             try:
-                return float(text)
+                return float(float_text)
             except ValueError:
                 pass
 
