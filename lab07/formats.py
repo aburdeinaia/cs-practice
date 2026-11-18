@@ -21,7 +21,7 @@ def csv_to_records(text:str) -> list[dict]:
     return records
 
 def to_type(value):
-    text = value.strip()
+    text = value.strip().replace(",", ".")
     low = text.lower()
     if low == "true" or low == "yes":
         return True
