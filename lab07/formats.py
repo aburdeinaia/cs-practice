@@ -20,7 +20,7 @@ def csv_to_records(text:str) -> list[dict]:
         records.append(record)
     return records
 
-def to_type(value):
+def to_type(text: str):
     low = text.lower()
     if low == "true" or low == "yes":
         return True
