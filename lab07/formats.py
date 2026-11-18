@@ -26,7 +26,7 @@ def to_type(text: str):
         return True
     if low == "false" or low == "no":
         return False
-
+    
     if "_" not in text:
         try:
             return int(text)
@@ -72,6 +72,7 @@ def parse_settings(lines: list[str]) -> dict:
             current_list = None
 
     return result
+
 def merge_by_key(rows: list[dict], extra: dict, key: str = "id") -> list[dict]:
     result = []
     for row in rows:
