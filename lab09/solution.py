@@ -7,7 +7,7 @@ def make_hours() -> list[int]:
 def vector_report(values: list[float]) -> dict:
     arr = np.asarray(values, dtype=float)
     
-    third_elem = arr.item()
+    third_elem = arr[2].item()
     last_elem = arr[-1].item()
     middle_slice = arr[2:6].tolist()
     every_second_slice = arr[::2].tolist()
@@ -20,6 +20,7 @@ def vector_report(values: list[float]) -> dict:
         "every_second": every_second_slice,
         "reversed": reversed_arr,
     }
+
 def change_vector(values: list[float]) -> list[float]:
     arr = np.asarray(values, dtype=float).copy()
     arr[2:5] = 99
